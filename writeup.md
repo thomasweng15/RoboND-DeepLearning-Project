@@ -9,9 +9,7 @@ I trained using the default test and validation data provided for us, and then g
 
 diagrma
 
-### Layers
-
-My network used three encoder layers, one 1x1 convolution, and three decoder layers, as shown in the diagram above. 
+We want to preserve spatial information in the follow me task because we don't want to just identify the hero in the scene but also where he or she is in the image so we can follow. While fully connected networks might have convolutional layers that feed into a non-convolutional softmax layer, for example, a fully convolution network uses convolutions in every layer so that spatial information is maintained. As a result, I use a fully convolutional network consisting of three encoder layers, one 1x1 convolution, and three decoder layers, as shown in the diagram above. See the following sections for more detail about each section. 
 
 #### Encoder blocks
 

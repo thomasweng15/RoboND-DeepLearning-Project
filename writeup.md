@@ -9,7 +9,7 @@ I trained my model using the provided training and validation sets, reaching a s
 
 I then attempted to use recorded data from the simulator to retrain my model to improve the score. However, I had small samples and had issues with overfitting to the new test data. 
 
-Then I created flipped versions of all images and masks in the test and validation sets, doubling the amount of samples I had. I used that data to retrain my existing model on 15 epochs with the same hyperparameters, resulting in a score of 0.48. Here is the final markdown file and output: [model_training_FINAL.md]("./model_training_FINAL/model_training.md")s
+Then I created flipped versions of all images and masks in the test and validation sets, doubling the amount of samples I had. I used that data to retrain my existing model on 15 epochs with the same hyperparameters, resulting in a score of 0.48. Here is the final HTML file with code and output: [model_training_FINAL.md]("./model_training_FINAL/model_training.html")s
 
 Here are some screenshots from running the follower.py script with my model:
 ![screenshot1]("./screenshot1.png")

@@ -1,13 +1,28 @@
 Follow Me Project Writeup
 ===
 
+## Summary
+
+I used an AWS EC2 instance to train my models. 
+
+I trained my model using the provided training and validation sets, reaching a score of 0.399. Here's the markdown file for my model_training jupyter notebook output up to this point: [model_training.md]("./model_training/model_training.md")
+
+I then attempted to use recorded data from the simulator to retrain my model to improve the score. However, I had small samples and had issues with overfitting to the new test data. 
+
+Then I created flipped versions of all images and masks in the test and validation sets, doubling the amount of samples I had. I used that data to retrain my existing model on 15 epochs with the same hyperparameters, resulting in a score of 0.48. Here is the final markdown file and output: [model_training_FINAL.md]("./model_training_FINAL/model_training.md")s
+
+Here are some screenshots from running the follower.py script with my model:
+![screenshot1]("./screenshot1.png")
+![screenshot2]("./screenshot2.png")
+![screenshot3]("./screenshot3.png")
+
 ## Data 
 
 I trained using the default test and validation data provided for us, and then gathered some data in simulation of the hero moving in dense crowds to supplement the existing data.
 
 ## Network Architecture
 
-![diagram]("./code/model.png")
+![diagram]("./model.png")
 
 We want to preserve spatial information in the follow me task because we don't want to just identify the hero in the scene but also where he or she is in the image so we can follow. While fully connected networks might have convolutional layers that feed into a non-convolutional softmax layer, for example, a fully convolution network uses convolutions in every layer so that spatial information is maintained. As a result, I use a fully convolutional network consisting of three encoder layers, one 1x1 convolution, and three decoder layers, as shown in the diagram above. See the following sections for more detail about each section. 
 
@@ -31,9 +46,7 @@ The decoder blocks upsample our network from the 1x1 convolution back to the ful
 
 These blocks are composed of a bilinear upsampling layer, which expands an input shape using a 2x2 width and height. Bilinear upsampling linear interpolates the value of the R, G, and B color channels along the width and height axes of an input shape to fill in the RGB values that are missing after expanding the shape.
 
-These bilinear upsampling layers and then followed by a concatenation layer, concatenating a previous decoder block output layer or 1x1 convolutional output layer with an encoder layer to better preserve spatial information. Since upsampling can remove some of the finer details from previous layers, concatenation allows us to preserve those details through the network. Concatenation has benefits over adding layers together because the depths of the layers do not have to be equal. 
-
-The concatenation layer is followed by three batch normalization layers to normalize the outputs as described earlier in this document. 
+These bilinear upsampling layers and then followed by a concatenation layer, concatenating a previous decoder block output layer or 1x1 convolutional output layer with an encoder layer to better preserve spatial information. Since upsampling can remove some of the finer details from previous layers, concatenation allows us to preserve those details through the network. Concatenation has benefits over adding layers together because the depths of the layers do not have to be equal. The concatenation layer is followed by three separable convolution layers to extract more spatial information from the prior layers. 
 
 I use three of these decoder blocks to mirror the number of encoder layers and expand the width and height of the output shape back to the original image size. This results in a reverse pyramid shape for the latter half of the network. The earlier decoder blocks are concatenated with later encoder blocks because the width and height of the layers must be equal. 
 
@@ -47,14 +60,6 @@ I used a relatively high epoch of 30 when training the initial network. An epoch
 
 I used 100 steps per epoch, so each epoch has 100 * 32 samples. This value undershoots the total number of samples I have because I have a high number of epochs, allowing the network to sample from the total number of images to construct each epoch set randomly and reduce the possibility of overfitting. 
 
-## Notes from Training 
-
-I used an AWS EC2 instance to train my models. 
-
-I trained my model using the provided training and validation sets, reaching a score of 0.399.
-
-Then I retrained my model using 42MB of data I collected in simulation observing the hero moving in dense crowds. This data was used as another test set. I used the same validation set from the first run. 
-
 ## Limitations
 
 This trained model is only able to follow one "hero" human. It is unable to generalize to hero humans that don't look like the one in the training data.
@@ -63,5 +68,12 @@ The model also cannot generalize to do image segmentation on other entities besi
 
 A new model would have be trained with data labeled for a new hero or a new type of entity in order to address these limitations. 
 
+## Future Improvements
+
+Collecting more data could further improve the network. I relied on the existing data and manipulations of it, but collecting data that more directly addresses some of the false positives and negatives from the scoring could result in a better performing network. 
+
+Writing a script to tune the hyperparameters on a small subset of the dataset could also result in more optimal hyperparameters compared to manual testing. 
+
 ## Resources Used
+
 I referenced the Slack for learning how to flip images and increase the size of the default dataset. I also referenced Slack to learn how to output a diagram for my model using keras. 

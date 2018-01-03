@@ -5,16 +5,16 @@ Follow Me Project Writeup
 
 I used an AWS EC2 instance to train my models. 
 
-I trained my model using the provided training and validation sets, reaching a score of 0.399. Here's the markdown file for my model_training jupyter notebook output up to this point: [model_training.md]("./model_training/model_training.md")
+I trained my model using the provided training and validation sets, reaching a score of 0.399. Here's the markdown file for my model_training jupyter notebook output up to this point: [model_training.md]("https://github.com/thomasweng15/RoboND-DeepLearning-Project/blob/master/model_training/model_training.md")
 
 I then attempted to use recorded data from the simulator to retrain my model to improve the score. However, I had small samples and had issues with overfitting to the new test data. 
 
-Then I created flipped versions of all images and masks in the test and validation sets, doubling the amount of samples I had. I used that data to retrain my existing model on 15 epochs with the same hyperparameters, resulting in a score of 0.48. Here is the final HTML file with code and output: [model_training_FINAL.md]("./model_training_FINAL/model_training.html")s
+Then I created flipped versions of all images and masks in the test and validation sets, doubling the amount of samples I had. I used that data to retrain my existing model on 15 epochs with the same hyperparameters, resulting in a score of 0.48. Here is the final HTML file with code and output: [model_training_FINAL.md]("https://github.com/thomasweng15/RoboND-DeepLearning-Project/blob/master/model_training_FINAL/model_training.html")
 
 Here are some screenshots from running the follower.py script with my model:
-![screenshot1]("./screenshot1.png")
-![screenshot2]("./screenshot2.png")
-![screenshot3]("./screenshot3.png")
+![screenshot1]("https://github.com/thomasweng15/RoboND-DeepLearning-Project/blob/master/screenshot1.png")
+![screenshot2]("https://github.com/thomasweng15/RoboND-DeepLearning-Project/blob/master/screenshot2.png")
+![screenshot3]("https://github.com/thomasweng15/RoboND-DeepLearning-Project/blob/master/screenshot3.png")
 
 ## Data 
 
@@ -22,7 +22,7 @@ I trained using the default test and validation data provided for us, and then g
 
 ## Network Architecture
 
-![diagram]("./model.png")
+![diagram]("https://github.com/thomasweng15/RoboND-DeepLearning-Project/blob/master/model.png")
 
 We want to preserve spatial information in the follow me task because we don't want to just identify the hero in the scene but also where he or she is in the image so we can follow. While fully connected networks might have convolutional layers that feed into a non-convolutional softmax layer, for example, a fully convolution network uses convolutions in every layer so that spatial information is maintained. As a result, I use a fully convolutional network consisting of three encoder layers, one 1x1 convolution, and three decoder layers, as shown in the diagram above. See the following sections for more detail about each section. 
 
